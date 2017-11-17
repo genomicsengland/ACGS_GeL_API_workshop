@@ -55,3 +55,5 @@ jupyter-notebook CIP_API_examples.ipynb
 
 This will open the notebook in [http://localhost:8888/notebooks/CIP_API_examples.ipynb](http://localhost:8888/notebooks/CIP_API_examples.ipynb)
 
+GelReportModels Doc
+https://genomicsengland.github.io/GelReportModels/
