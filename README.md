@@ -38,11 +38,20 @@ adding your credentials and the server you want to conect to.
 ```
 source cip_api_credentials
 ```
+6. -Optional- to use Gel-Models
+```
+git clone git@github.com:genomicsengland/GelReportModels.git
+cd GelReportModels
+pip install -r requirements.txt
+python build.py
+pip install . 
+```
 
-6. You should now be able to run the notebook:
+7. You should now be able to run the notebook:
 ```
 jupyter-notebook CIP_API_examples.ipynb
 ```
+
 
 This will open the notebook in [http://localhost:8888/notebooks/CIP_API_examples.ipynb](http://localhost:8888/notebooks/CIP_API_examples.ipynb)
 
