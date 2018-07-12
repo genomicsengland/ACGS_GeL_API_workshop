@@ -42,9 +42,7 @@ source cip_api_credentials
 ```
 git clone git@github.com:genomicsengland/GelReportModels.git
 cd GelReportModels
-pip install -r requirements.txt
-python build.py --skip-docs --skip-java
-pip install . 
+pip install .
 ```
 
 7. You should now be able to run the notebook:
