@@ -39,7 +39,7 @@ pip install .
 5. You should now be able to run the notebook:
 ```
 cd ../ACGS_GeL_API_workshop
-jupyter-notebook Exit_Questionnaire_Workshop/CIP_API_examples.ipynb
+jupyter-notebook Exit_Questionnaire_Workshop/WORKSHOP.ipynb
 ```
 
 GelReportModels Doc
