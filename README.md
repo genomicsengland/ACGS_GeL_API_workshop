@@ -1,5 +1,8 @@
 Getting started
 =======
+
+*NOTE: Please use Python 2.7*
+
 0. Clone this repository:
 ```
 git clone git@github.com:genomicsengland/ACGS_GeL_API_workshop.git
