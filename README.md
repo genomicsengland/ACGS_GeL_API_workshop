@@ -1,7 +1,8 @@
 Getting started
 =======
 
-*NOTE: Please use Python 2.7*
+Gel Report Models is now available both in Python 2 and Python 3. 
+Depending on your version of python and pip when you install it, it will install the appropriate version for your environment.
 
 0. Clone this repository:
 ```
