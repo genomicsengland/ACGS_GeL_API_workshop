@@ -1,0 +1,913 @@
+{
+	"info": {
+		"_postman_id": "6f584f54-5fc4-46e9-988a-171f3bee5a9e",
+		"name": "CIPAPI SIT",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Token from AD",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "6585432f-8971-4706-a9d2-42cb510dab41",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"pm.collectionVariables.set(\"token\", jsonData.access_token);",
+							"",
+							"tests[\"Status code returned is: \" + responseCode.code ] = responseCode.code === 200;"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "395175ad-60e4-444b-aa2f-9e10e268a418",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic ({appID}:{Secret} in Base64 encoding)"
+					},
+					{
+						"key": "content-type",
+						"value": "multipart/form-data"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "grant_type",
+							"value": "client_credentials",
+							"type": "text"
+						},
+						{
+							"key": "client_id",
+							"value": "{{client_id}}",
+							"type": "text"
+						},
+						{
+							"key": "client_secret",
+							"value": "{{client_secret}}",
+							"type": "text"
+						}
+					],
+					"options": {
+						"formdata": {}
+					}
+				},
+				"url": {
+					"raw": "https://login.microsoftonline.com/{{tenant_id}}/oauth2/token",
+					"protocol": "https",
+					"host": [
+						"login",
+						"microsoftonline",
+						"com"
+					],
+					"path": [
+						"{{tenant_id}}",
+						"oauth2",
+						"token"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Retrieve a Clinical Report",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "36d77ebe-3041-4055-9669-15832a876319",
+						"exec": [
+							"tests[\"Status code returned is: \" + responseCode.code ] = responseCode.code === 200;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "JWT {{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://{{env}}.{{base_url}}/api/2/clinical-report/{{ir_id}}/{{ir_version}}/{{clinical_report_version}}?reports_v6=true&as=json",
+					"protocol": "https",
+					"host": [
+						"{{env}}",
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"2",
+						"clinical-report",
+						"{{ir_id}}",
+						"{{ir_version}}",
+						"{{clinical_report_version}}"
+					],
+					"query": [
+						{
+							"key": "reports_v6",
+							"value": "true"
+						},
+						{
+							"key": "as",
+							"value": "json"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "API Documentation",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "67458963-b394-48dd-af9a-4d9d6cd743a9",
+						"exec": [
+							"tests[\"Status code returned is: \" + responseCode.code ] = responseCode.code === 200;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "accept",
+						"value": "application/json",
+						"disabled": true
+					},
+					{
+						"key": "Authorization",
+						"value": "JWT {{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://{{env}}.{{base_url}}/api/2/docs/",
+					"protocol": "https",
+					"host": [
+						"{{env}}",
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"2",
+						"docs",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": " Overview of all Exit Questionnaires",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "129b9f17-bf7c-4cb7-b86b-cc4a7c5e3eae",
+						"exec": [
+							"tests[\"Status code returned is: \" + responseCode.code ] = responseCode.code === 200;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "JWT {{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://{{env}}.{{base_url}}/api/2/exit-questionnaire/",
+					"protocol": "https",
+					"host": [
+						"{{env}}",
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"2",
+						"exit-questionnaire",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create an Exit Questionnaire for a case",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "fed09802-57f6-4edf-a29b-bf40c618c039",
+						"exec": [
+							"tests[\"Status code returned is: \" + responseCode.code ] = responseCode.code === 200;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "JWT {{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"eventDate\": \"2020-04-20\",\n    \"reporter\": \"jbloggs\",\n    \"familyLevelQuestions\": {\n        \"caseSolvedFamily\": \"no\",\n        \"segregationQuestion\": \"no\",\n        \"additionalComments\": \"No tier 1 or 2 variants detected\"\n    },\n    \"variantGroupLevelQuestions\": []\n}",
+					"options": {
+						"raw": {}
+					}
+				},
+				"url": {
+					"raw": "https://{{env}}.{{base_url}}/api/2/exit-questionnaire/{{ir_id}}/{{ir_version}}/{{clinical_report_version}}/",
+					"protocol": "https",
+					"host": [
+						"{{env}}",
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"2",
+						"exit-questionnaire",
+						"{{ir_id}}",
+						"{{ir_version}}",
+						"{{clinical_report_version}}",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": " Retrieve an Exit Questionnaire",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "721e1124-b960-47a4-abe9-078a6c13a7c3",
+						"exec": [
+							"tests[\"Status code returned is: \" + responseCode.code ] = responseCode.code === 200;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "JWT {{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://{{env}}.{{base_url}}/api/2/exit-questionnaire/{{ir_id}}/{{ir_version}}/{{clinical_report_version}}/",
+					"protocol": "https",
+					"host": [
+						"{{env}}",
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"2",
+						"exit-questionnaire",
+						"{{ir_id}}",
+						"{{ir_version}}",
+						"{{clinical_report_version}}",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create a Clinical Report for a case",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "06e17aa7-cf48-4e35-996a-51791e79001a",
+						"exec": [
+							"tests[\"Status code returned is: \" + responseCode.code ] = responseCode.code === 200;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "JWT {{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"interpretationRequestId\": \"{{ir_id}}\",\n    \"interpretationRequestVersion\": {{ir_version}},\n    \"reportingDate\": \"2020-04-20\",\n    \"user\": \"jbloggs\",\n    \"variants\": [],\n    \"structuralVariants\": [],\n    \"chromosomalRearrangements\": null,\n    \"shortTandemRepeats\": [],\n    \"uniparentalDisomies\": null,\n    \"karyotypes\": null,\n    \"genomicInterpretation\": \"No tier 1 or 2 variants detected\",\n    \"additionalAnalysisPanels\": null,\n    \"references\": [],\n    \"referenceDatabasesVersions\": {\n        \"genomeAssembly\": \"GRCh37\"\n    },\n    \"softwareVersions\": {\n        \"PhyloP\": \"phyloP46way (1990-09-08)\",\n        \"MutationTaster\": \"dbNSFP v2.9\",\n        \"VVP\": \"v1.1\",\n        \"PolyPhen-2\": \"v2.2.2\",\n        \"SIFT\": \"dbNSFP v2.9\",\n        \"Omicia Score\": \"v2.0\",\n        \"pipeline_version\": \"1.1.1\"\n    }\n}",
+					"options": {
+						"raw": {}
+					}
+				},
+				"url": {
+					"raw": "https://{{env}}.{{base_url}}/api/2/clinical-report/genomics_england_tiering/raredisease/{{ir_id}}-{{ir_version}}/?reports_v6=true",
+					"protocol": "https",
+					"host": [
+						"{{env}}",
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"2",
+						"clinical-report",
+						"genomics_england_tiering",
+						"raredisease",
+						"{{ir_id}}-{{ir_version}}",
+						""
+					],
+					"query": [
+						{
+							"key": "reports_v6",
+							"value": "true"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Download files from a case",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "7799b7ea-0abd-474d-8e15-125975f7712e",
+						"exec": [
+							"tests[\"Status code returned is: \" + responseCode.code ] = responseCode.code === 200;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "JWT {{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://{{env}}.{{base_url}}/api/2/file/{{file_name}}/download-file/",
+					"protocol": "https",
+					"host": [
+						"{{env}}",
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"2",
+						"file",
+						"{{file_name}}",
+						"download-file",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": " Overview of all the cases",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "a6744cf0-c9e9-48c4-a7f2-3808d3384883",
+						"exec": [
+							"tests[\"Status code returned is: \" + responseCode.code ] = responseCode.code === 200;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "JWT {{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://{{env}}.{{base_url}}/api/2/interpretation-request",
+					"protocol": "https",
+					"host": [
+						"{{env}}",
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"2",
+						"interpretation-request"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Retrieve a case",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "75ecf3a7-d4d1-4db0-a151-ea31c99bd059",
+						"exec": [
+							"tests[\"Status code returned is: \" + responseCode.code ] = responseCode.code === 200;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "JWT {{token}}",
+						"type": "text"
+					},
+					{
+						"key": "accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://{{env}}.{{base_url}}/api/2/interpretation-request/{{ir_id}}/{{ir_version}}/?reports_v6=true",
+					"protocol": "https",
+					"host": [
+						"{{env}}",
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"2",
+						"interpretation-request",
+						"{{ir_id}}",
+						"{{ir_version}}",
+						""
+					],
+					"query": [
+						{
+							"key": "reports_v6",
+							"value": "true"
+						},
+						{
+							"key": "extra_params",
+							"value": "show_referral",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Retrieve workflow status history for a case",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "7c055926-c0e0-45b7-b1e4-4de4130a37c2",
+						"exec": [
+							"tests[\"Status code returned is: \" + responseCode.code ] = responseCode.code === 200;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "JWT {{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://{{env}}.{{base_url}}/api/2/interpretation-request/{{ir_id}}/{{ir_version}}/workflow_status?page=1",
+					"protocol": "https",
+					"host": [
+						"{{env}}",
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"2",
+						"interpretation-request",
+						"{{ir_id}}",
+						"{{ir_version}}",
+						"workflow_status"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Overview of all Interpreted Genomes.",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "6634dced-2606-4932-b723-b7caa45d2558",
+						"exec": [
+							"tests[\"Status code returned is: \" + responseCode.code ] = responseCode.code === 200;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "JWT {{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://{{env}}.{{base_url}}/api/2/interpreted-genome",
+					"protocol": "https",
+					"host": [
+						"{{env}}",
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"2",
+						"interpreted-genome"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Retrieve the last Interpreted Genome from an interpretation service for a case.",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "c7dbc102-2c1a-4dde-9ddb-0bedd266d1ee",
+						"exec": [
+							"tests[\"Status code returned is: \" + responseCode.code ] = responseCode.code === 200;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "JWT {{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://{{env}}.{{base_url}}/api/2/interpreted-genome/{{ir_id}}/{{ir_version}}/{{interpretation_service}}/last?reports_v6=true",
+					"protocol": "https",
+					"host": [
+						"{{env}}",
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"2",
+						"interpreted-genome",
+						"{{ir_id}}",
+						"{{ir_version}}",
+						"{{interpretation_service}}",
+						"last"
+					],
+					"query": [
+						{
+							"key": "reports_v6",
+							"value": "true"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "List of all workspaces and LDAP groups associated with them",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "cbac8402-7491-40d4-b0dd-eb9eb4077715",
+						"exec": [
+							"tests[\"Status code returned is: \" + responseCode.code ] = responseCode.code === 200;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "JWT {{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://{{env}}.{{base_url}}/api/2/workspace-groups",
+					"protocol": "https",
+					"host": [
+						"{{env}}",
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"2",
+						"workspace-groups"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Overview of clinical reports",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "346af5b8-3cc2-481a-9598-e87208043140",
+						"exec": [
+							"tests[\"Status code returned is: \" + responseCode.code ] = responseCode.code === 200;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "JWT {{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://{{env}}.{{base_url}}/api/2/clinical-report",
+					"protocol": "https",
+					"host": [
+						"{{env}}",
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"2",
+						"clinical-report"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "6bc132c6-b906-41f4-b888-f90dc98d03de",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "8c261b1f-6174-42bb-8ac2-ce295374c7e8",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "a05284ce-a3f0-4236-8623-9ae6f1c28ed1",
+			"key": "client_id_example",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"id": "4eb34586-0fc9-44da-ad8c-9dee9061f496",
+			"key": "client_secret_example",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"id": "519a6f37-3e11-4dac-9d17-79a7095b80a7",
+			"key": "tenant_id",
+			"value": "99515578-fda0-444c-8f5a-2005038880f2",
+			"type": "string"
+		},
+		{
+			"id": "765c1b70-6654-4e10-bddf-eb56575fc114",
+			"key": "env",
+			"value": "cipapi-beta",
+			"type": "string"
+		},
+		{
+			"id": "b4870fe1-8210-4a25-9a88-629341ca158e",
+			"key": "base_url",
+			"value": "genomicsengland.co.uk",
+			"type": "string"
+		},
+		{
+			"id": "0b108770-cb07-4f7e-9621-25caea553c8d",
+			"key": "token",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"id": "c1e5e524-14c6-4ccd-92c4-e6697e7a4c1f",
+			"key": "ir_id",
+			"value": "2535",
+			"type": "string"
+		},
+		{
+			"id": "b45124bc-85dd-487c-9e95-b2a2b24b2b57",
+			"key": "ir_version",
+			"value": "1",
+			"type": "string"
+		},
+		{
+			"id": "51ddf5b2-5349-4c6b-a793-af25b9024068",
+			"key": "clinical_report_version",
+			"value": "1",
+			"type": "string"
+		},
+		{
+			"id": "3a6806b6-c3b5-4e67-b378-56391564d043",
+			"key": "file_name",
+			"value": "1591259855.43",
+			"type": "string"
+		},
+		{
+			"id": "288d3433-fe1d-4323-8efe-1594bd11e0ce",
+			"key": "initial_date",
+			"value": "01-01-2007",
+			"type": "string"
+		},
+		{
+			"id": "5bbbf860-8fbf-4578-a13b-16ad1b998b13",
+			"key": "final_date",
+			"value": "01-01-2021",
+			"type": "string"
+		},
+		{
+			"id": "aab63501-0627-4946-9f94-8d3d928aaf9f",
+			"key": "sample_id",
+			"value": "NA19314",
+			"type": "string"
+		},
+		{
+			"id": "d38f5874-f20d-463e-81f3-5e2bccdecd63",
+			"key": "referral_id",
+			"value": "6U3XR9MIOX0T",
+			"type": "string"
+		},
+		{
+			"id": "cf1d387d-268a-46f7-b18a-d862d35dfa59",
+			"key": "interpretation_service",
+			"value": "genomics_england_tiering",
+			"type": "string"
+		},
+		{
+			"id": "509a1373-a4a9-47bd-9b9c-b71647581462",
+			"key": "client_id",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"id": "20e90bed-409f-4a40-a7db-934cb394b532",
+			"key": "client_secret",
+			"value": "",
+			"type": "string"
+		}
+	],
+	"protocolProfileBehavior": {}
+}
