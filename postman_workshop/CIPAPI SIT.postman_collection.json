@@ -85,6 +85,49 @@
 			"response": []
 		},
 		{
+			"name": "Overview of all Clinical Reports",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ce68aab0-5d2a-4da2-9963-ef4bda9ed080",
+						"exec": [
+							"tests[\"Status code returned is: \" + responseCode.code ] = responseCode.code === 200;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "JWT {{token}}"
+					}
+				],
+				"url": {
+					"raw": "https://{{env}}.{{base_url}}/api/2/clinical-report",
+					"protocol": "https",
+					"host": [
+						"{{env}}",
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"2",
+						"clinical-report"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "Retrieve a Clinical Report",
 			"event": [
 				{
@@ -738,49 +781,6 @@
 				}
 			},
 			"response": []
-		},
-		{
-			"name": "Overview of clinical reports",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "346af5b8-3cc2-481a-9598-e87208043140",
-						"exec": [
-							"tests[\"Status code returned is: \" + responseCode.code ] = responseCode.code === 200;"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "GET",
-				"header": [
-					{
-						"key": "accept",
-						"value": "application/json"
-					},
-					{
-						"key": "Authorization",
-						"value": "JWT {{token}}",
-						"type": "text"
-					}
-				],
-				"url": {
-					"raw": "https://{{env}}.{{base_url}}/api/2/clinical-report",
-					"protocol": "https",
-					"host": [
-						"{{env}}",
-						"{{base_url}}"
-					],
-					"path": [
-						"api",
-						"2",
-						"clinical-report"
-					]
-				}
-			},
-			"response": []
 		}
 	],
 	"event": [
@@ -807,104 +807,68 @@
 	],
 	"variable": [
 		{
-			"id": "a05284ce-a3f0-4236-8623-9ae6f1c28ed1",
-			"key": "client_id_example",
-			"value": "",
-			"type": "string"
-		},
-		{
-			"id": "4eb34586-0fc9-44da-ad8c-9dee9061f496",
-			"key": "client_secret_example",
-			"value": "",
-			"type": "string"
-		},
-		{
-			"id": "519a6f37-3e11-4dac-9d17-79a7095b80a7",
+			"id": "b401adea-eb92-4f84-b2e4-fa2b0ea695a5",
 			"key": "tenant_id",
 			"value": "99515578-fda0-444c-8f5a-2005038880f2",
 			"type": "string"
 		},
 		{
-			"id": "765c1b70-6654-4e10-bddf-eb56575fc114",
+			"id": "0984796b-07d1-4613-b6ac-3445ff0e71e5",
 			"key": "env",
 			"value": "cipapi-beta",
 			"type": "string"
 		},
 		{
-			"id": "b4870fe1-8210-4a25-9a88-629341ca158e",
+			"id": "c40f48bc-bed0-44b0-a974-90736d595b65",
 			"key": "base_url",
 			"value": "genomicsengland.co.uk",
 			"type": "string"
 		},
 		{
-			"id": "0b108770-cb07-4f7e-9621-25caea553c8d",
-			"key": "token",
-			"value": "",
-			"type": "string"
-		},
-		{
-			"id": "c1e5e524-14c6-4ccd-92c4-e6697e7a4c1f",
-			"key": "ir_id",
-			"value": "2535",
-			"type": "string"
-		},
-		{
-			"id": "b45124bc-85dd-487c-9e95-b2a2b24b2b57",
-			"key": "ir_version",
-			"value": "1",
-			"type": "string"
-		},
-		{
-			"id": "51ddf5b2-5349-4c6b-a793-af25b9024068",
-			"key": "clinical_report_version",
-			"value": "1",
-			"type": "string"
-		},
-		{
-			"id": "3a6806b6-c3b5-4e67-b378-56391564d043",
-			"key": "file_name",
-			"value": "1591259855.43",
-			"type": "string"
-		},
-		{
-			"id": "288d3433-fe1d-4323-8efe-1594bd11e0ce",
-			"key": "initial_date",
-			"value": "01-01-2007",
-			"type": "string"
-		},
-		{
-			"id": "5bbbf860-8fbf-4578-a13b-16ad1b998b13",
-			"key": "final_date",
-			"value": "01-01-2021",
-			"type": "string"
-		},
-		{
-			"id": "aab63501-0627-4946-9f94-8d3d928aaf9f",
-			"key": "sample_id",
-			"value": "NA19314",
-			"type": "string"
-		},
-		{
-			"id": "d38f5874-f20d-463e-81f3-5e2bccdecd63",
-			"key": "referral_id",
-			"value": "6U3XR9MIOX0T",
-			"type": "string"
-		},
-		{
-			"id": "cf1d387d-268a-46f7-b18a-d862d35dfa59",
+			"id": "1de56a5f-1ea8-4b35-b77e-852d953a323f",
 			"key": "interpretation_service",
 			"value": "genomics_england_tiering",
 			"type": "string"
 		},
 		{
-			"id": "509a1373-a4a9-47bd-9b9c-b71647581462",
+			"id": "ffa408a9-c389-4d7a-a8c3-229d0d400aa0",
 			"key": "client_id",
 			"value": "",
 			"type": "string"
 		},
 		{
-			"id": "20e90bed-409f-4a40-a7db-934cb394b532",
+			"id": "879e3c3a-2c0d-44ff-9330-2c50079c413e",
 			"key": "client_secret",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"id": "53a4038e-3550-462c-8228-96dcfb565ab7",
+			"key": "ir_id",
+			"value": "2535",
+			"type": "string"
+		},
+		{
+			"id": "8de15b41-7e12-4d20-b5c1-92d65dadf2fc",
+			"key": "ir_version",
+			"value": "1",
+			"type": "string"
+		},
+		{
+			"id": "99be59c1-d0b1-444a-9210-5dfca77ec76f",
+			"key": "clinical_report_version",
+			"value": "1",
+			"type": "string"
+		},
+		{
+			"id": "4845cc37-fac8-4b3a-a1c0-c6f691cf9c99",
+			"key": "file_name",
+			"value": "1591259855.43",
+			"type": "string"
+		},
+		{
+			"id": "d98c7ab8-3448-4e12-9655-cf51227ec12f",
+			"key": "token",
 			"value": "",
 			"type": "string"
 		}
