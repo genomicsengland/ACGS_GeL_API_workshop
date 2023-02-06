@@ -8,6 +8,7 @@ a specified gene symbol and checks if that gene contains any tier 1 or tier 2 va
 Tested using Python 3.8 (Note! Python 3.10 does not work)
 
 `pip install clinical-variant-ark`
+`pip install pandas`
 
 You will need to be on the HSCN network and have a CVA username and password
 
