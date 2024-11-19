@@ -7,13 +7,13 @@ It is a guide only, not tested and should not be used "as is" without further re
 import os
 import requests
 
-host_gms = "please add url here" # add the CIP-API URL here e.g. https://cipapi-gms-beta.genomicsengland.nhs.uk
 
-tenant_id = "please add tenant id here" # this is the ID of the Active Directory "tenant"
+host_gms = f"https://cipapi-gms-beta.genomicsengland.nhs.uk" # update this for prod
 
-# environment variables set with client ID and secret
+tenant_id = "update this" # see here: https://ip-cipapi-help.genomicsengland.co.uk/3.15/environments/
+
+# environment variables set with client ID and secret, these will have been shared by GeL Service Desk
 client_id = os.getenv("CLIENT_ID")
-print(client_id)
 client_secret = os.getenv("CLIENT_SECRET")
 
 def get_client_creds_ad_token(tenant_id, client_id, client_secret):
@@ -48,13 +48,13 @@ def list_cases(token):
     """
 
     # some different examples made to the list end point
+    url = '{host}/api/2/interpretation-request'.format(host=host_gms)
     # url = '{host}/api/2/interpretation-request?extra-params=show_referral'.format(host=host_gms)
     # url = '{host}/api/2/interpretation-request?extra-params=show_referral&primary_glh_cases=True'.format(host=host_gms)
-    url = '{host}/api/2/interpretation-request?extra-params=show_referral&category=gms&interpreter_organisation_national_grouping_id=69A70'.format(host=host_gms)
+    # url = '{host}/api/2/interpretation-request?extra-params=show_referral&category=gms&interpreter_organisation_national_grouping_id=69A70'.format(host=host_gms)
 
     auth_header = {'Authorization': 'JWT {}'.format(token)}
     case_list = requests.get(url, headers=auth_header).json()
-
     return case_list
 
 
@@ -71,7 +71,6 @@ def get_unique_interpreter_ids(case_list):
 
     for referral_test in referral_tests:
         for test in referral_test:
-            # print(referral_test)
             id_list.append(test['interpreter_organisation_national_grouping_id'])
 
     return set(id_list)
