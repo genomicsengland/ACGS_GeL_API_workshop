@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><title>igv.js</title></head>
+<body><p> Test igv</p>
+<div id="igvDiv" style="padding-top: 10px;padding-bottom: 10px; border:1px solid lightgray"></div>
+<script type="module">    import igv from "https://cdn.jsdelivr.net/npm/igv@3.0.8/dist/igv.esm.min.js"
+var options = {
+    genome: "hg38",
+    locus: "chr1:2193680-2193690",
+    tracks: [
+        {
+        name: 'LP123456789-DNA_G10',
+        type: 'alignment',
+        format: 'bam',
+        url: 'https://htsget-gms-beta.genomicsengland.nhs.uk/reads/bypath/{STUDY_ID_HERE}/by_name:LP123456789-DNA_G10:BE00001234:LP123456789-DNA_G10.cram',
+        sourceType: 'htsget',
+        oauthToken: 'YOUR TOKEN HERE'
+        },
+        {
+        name: 'LP123456789-DNA_G10',
+        type: 'variant',
+        format: 'vcf',
+        url: 'https://htsget-gms-beta.genomicsengland.nhs.uk/variants/bypath/{STUDY_ID_HERE}/analysis:multisample:...:split_joint_vcf:...:1:output:r123456789_10000_LP123456789-DNA_G10.vcf.gz',
+        sourceType: 'htsget',
+        oauthToken: 'YOUR TOKEN HERE'
+        }
+        ]
+}
+var igvDiv = document.getElementById("igvDiv");
+igv.createBrowser(igvDiv, options).then(function (browser) {
+    console.log("Created IGV browser");
+})</script>
+</body>
+</html>
+
