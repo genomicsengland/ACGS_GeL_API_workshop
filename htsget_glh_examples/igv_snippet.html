@@ -9,12 +9,19 @@ var options = {
     locus: "chr1:2193680-2193690",
     tracks: [
         {
-        name: 'P123456789-DNA_G10'
-        type: 'alignment', 
-        format: 'bam', 
-        url: 'https://htsget-gms-beta.genomicsengland.nhs.uk/reads/bypath/{STUDY_ID_HERE}/by_name:LP123456789-DNA_G10:BE00006002:LP123456789-DNA_G10.cram',
-        sourceType: 'htsget', 
-        height: 600,
+        name: 'LP123456789-DNA_G10',
+        type: 'alignment',
+        format: 'bam',
+        url: 'https://htsget-gms-beta.genomicsengland.nhs.uk/reads/bypath/{STUDY_ID_HERE}/by_name:LP123456789-DNA_G10:BE00001234:LP123456789-DNA_G10.cram',
+        sourceType: 'htsget',
+        oauthToken: 'YOUR TOKEN HERE'
+        },
+        {
+        name: 'LP123456789-DNA_G10',
+        type: 'variant',
+        format: 'vcf',
+        url: 'https://htsget-gms-beta.genomicsengland.nhs.uk/variants/bypath/{STUDY_ID_HERE}/analysis:multisample:...:split_joint_vcf:...:1:output:r123456789_10000_LP123456789-DNA_G10.vcf.gz',
+        sourceType: 'htsget',
         oauthToken: 'YOUR TOKEN HERE'
         }
         ]
